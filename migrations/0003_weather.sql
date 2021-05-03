@@ -16,14 +16,24 @@ CREATE TABLE sources (
 CREATE INDEX weather_source_location ON sources USING gist(ll_to_earth(lat, lon));
 
 CREATE TABLE weather (
-  timestamp       timestamptz NOT NULL,
-  source_id       int NOT NULL REFERENCES sources(id) ON DELETE CASCADE,
-  precipitation   real CHECK (precipitation >= 0),
-  pressure_msl    integer CHECK (pressure_msl > 0),
-  sunshine        smallint CHECK (sunshine BETWEEN 0 and 3600),
-  temperature     real CHECK (temperature > 0),
-  wind_direction  smallint CHECK (wind_direction BETWEEN 0 AND 360),
-  wind_speed      real CHECK (wind_speed >= 0),
+  timestamp        timestamptz NOT NULL,
+  source_id        int NOT NULL REFERENCES sources(id) ON DELETE CASCADE,
+  precipitation    real CHECK (precipitation >= 0),
+  pp00             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp01             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp02             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp03             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp05             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp07             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp10             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp20             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp30             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pp50             smallint CHECK (precipitation BETWEEN 0 and 100),
+  pressure_msl     integer CHECK (pressure_msl > 0),
+  sunshine         smallint CHECK (sunshine BETWEEN 0 and 3600),
+  temperature      real CHECK (temperature > 0),
+  wind_direction   smallint CHECK (wind_direction BETWEEN 0 AND 360),
+  wind_speed       real CHECK (wind_speed >= 0),
 
   CONSTRAINT weather_key UNIQUE (timestamp, source_id)
 );

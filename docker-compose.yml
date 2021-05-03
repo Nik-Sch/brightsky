@@ -6,9 +6,8 @@ x-brightsky:
   depends_on:
     - postgres
     - redis
-  environment:
-    BRIGHTSKY_DATABASE_URL: postgres://postgres:pgpass@postgres
-    BRIGHTSKY_REDIS_URL: redis://redis
+  env_file:
+    brightsky.env
 
 services:
   postgres:
@@ -19,19 +18,36 @@ services:
     volumes:
       - .data:/var/lib/postgresql/data
     restart: always
+    networks:
+      - backend
   redis:
     image: redis:5-alpine
     restart: always
+    networks:
+      - backend
   worker:
     <<: *brightsky
     command: --migrate work
     restart: always
+    networks:
+      - backend
   web:
     <<: *brightsky
+    container_name: brightsky_frontend
     command: serve --bind 0.0.0.0:5000
     restart: always
-    ports:
-      - 5000:5000
+    networks:
+      - backend
+      - api
   brightsky:
     <<: *brightsky
     scale: 0
+    networks:
+      - backend
+
+  
+networks:
+  backend:
+    driver: bridge
+  api:
+    driver: bridge

@@ -76,8 +76,8 @@ class Parser:
 class MOSMIXParser(Parser):
 
     DEFAULT_URL = (
-        'https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_S/'
-        'all_stations/kml/MOSMIX_S_LATEST_240.kmz')
+        'https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/'
+        'all_stations/kml/MOSMIX_L_LATEST.kmz')
     PRIORITY = 20
 
     ELEMENTS = {
@@ -87,6 +87,16 @@ class MOSMIXParser(Parser):
         'N': 'cloud_cover',
         'PPPP': 'pressure_msl',
         'RR1c': 'precipitation',
+        'wwP': 'pp00',
+        'R101': 'pp01',
+        'R102': 'pp02',
+        'R103': 'pp03',
+        'R105': 'pp05',
+        'R107': 'pp07',
+        'R110': 'pp10',
+        'R120': 'pp20',
+        'R130': 'pp30',
+        'R150': 'pp50',
         'SunD1': 'sunshine',
         'Td': 'dew_point',
         'TTT': 'temperature',
@@ -736,7 +746,7 @@ class PressureObservationsParser(ObservationsParser):
 
 def get_parser(filename):
     parsers = {
-        r'MOSMIX_S_LATEST_240\.kmz$': MOSMIXParser,
+        r'MOSMIX_L_LATEST_\d+\.kmz$': MOSMIXParser,
         r'Z__C_EDZW_\d+_.*\.json\.bz2$': SYNOPParser,
         r'\w{5}-BEOB\.csv$': CurrentObservationsParser,
         'stundenwerte_FF_': WindObservationsParser,

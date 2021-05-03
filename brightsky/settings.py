@@ -19,7 +19,7 @@ IGNORED_CURRENT_OBSERVATIONS_STATIONS = ['K386']
 KEEP_DOWNLOADS = False
 MIN_DATE = datetime.datetime(2010, 1, 1, tzinfo=tzutc())
 MAX_DATE = None
-POLLING_CRONTAB_MINUTE = '*'
+POLLING_CRONTAB_MINUTE = '28'
 REDIS_URL = 'redis://localhost'
 
 

@@ -14,10 +14,8 @@ from brightsky.parsers import get_parser
 class DWDPoller:
 
     urls = [
-        'https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_S/'
-        'all_stations/kml/',
-        'https://opendata.dwd.de/weather/weather_reports/synoptic/germany/'
-        'json/',
+        'https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/single_stations/',
+        'https://opendata.dwd.de/weather/weather_reports/synoptic/germany/json/',
         'https://opendata.dwd.de/weather/weather_reports/poi/',
     ] + [
         'https://opendata.dwd.de/climate_environment/CDC/observations_germany/'
@@ -54,7 +52,7 @@ class DWDPoller:
         resp.raise_for_status()
         return self.parse(url, resp.text)
 
-    def parse(self, url, resp_text):
+    def parse(self, url: str, resp_text):
         sel = Selector(resp_text)
         directories = []
         files = []
@@ -64,7 +62,10 @@ class DWDPoller:
                 continue
             link_url = f'{url}{link}'
             if link.endswith('/'):
-                directories.append(link_url)
+                if 'MOSMIX_L' in url:
+                    directories.append(f'{link_url}/kml/')
+                else:
+                    directories.append(link_url)
             else:
                 fingerprint = anchor_sel.xpath(
                     './following-sibling::text()[1]').extract_first()

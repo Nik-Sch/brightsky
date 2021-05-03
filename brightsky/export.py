@@ -49,7 +49,8 @@ class DBExporter:
         'observation_type', 'lat', 'lon', 'height', 'dwd_station_id',
         'wmo_station_id', 'station_name']
     ELEMENT_FIELDS = [
-        'cloud_cover', 'condition', 'dew_point', 'precipitation',
+        'cloud_cover', 'condition', 'dew_point', 'precipitation', 'pp00', 'pp01',
+        'pp02', 'pp03', 'pp05', 'pp07', 'pp10', 'pp20', 'pp30', 'pp50',
         'pressure_msl', 'relative_humidity', 'sunshine', 'temperature',
         'visibility', 'wind_direction', 'wind_speed', 'wind_gust_direction',
         'wind_gust_speed']
