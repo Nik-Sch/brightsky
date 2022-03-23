@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Bright Sky
-  version: 1.0.7
+  version: 1.0.13
   description: |
     <h2>JSON API for DWD's open weather data.</h2>
 
@@ -51,11 +51,9 @@ info:
       - [DWD Open Data FAQ (German)](https://www.dwd.de/DE/leistungen/opendata/faqs_opendata.html)
       - [DWD Copyright information](https://www.dwd.de/EN/service/copyright/copyright_artikel.html)
 
-    ## Contact
-
   contact:
     email: jakob@naboa.de
-    name: Bright Sky
+    name: Jakob de Maeyer
     url: 'https://brightsky.dev/'
   license:
     name: MIT License
@@ -608,6 +606,14 @@ components:
           type: string
           example: 'historical'
           enum: ['forecast', 'synop', 'current', 'historical']
+        first_record:
+          allOf:
+            - $ref: '#/components/schemas/Timestamp'
+            - description: Timestamp of first available record for this source
+        last_record:
+          allOf:
+            - $ref: '#/components/schemas/Timestamp'
+            - description: Timestamp of latest available record for this source
         lat:
           description: Station latitude, in decimal degrees
           type: number
