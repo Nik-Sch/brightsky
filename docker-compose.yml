@@ -16,7 +16,7 @@ services:
     environment:
       POSTGRES_PASSWORD: pgpass
     volumes:
-      - .data:/var/lib/postgresql/data
+      - data:/var/lib/postgresql/data
     restart: always
     networks:
       - backend
@@ -44,6 +44,14 @@ services:
     scale: 0
     networks:
       - backend
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/niklas/brightsky_storage/data
 
   
 networks:
